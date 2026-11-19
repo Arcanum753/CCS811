@@ -24,7 +24,7 @@
 
 - FR-CCS811-1: Автоопределение адреса и проверка `HW_ID == 0x81`.
 - FR-CCS811-2: Инициализация: проверка `APP_VALID`, при необходимости software reset,
-  `APP_START`, `MEAS_MODE = 1` (измерение раз в секунду).
+  `APP_START`, `MEAS_MODE = 0x10` (drive mode 1, измерение раз в секунду).
 - FR-CCS811-3: Публикация `ccs811.available` (BOOL), `ccs811.eco2` (I32, ppm),
   `ccs811.tvoc` (I32, ppb).
 - FR-CCS811-4: При `ERROR` — чтение `ERROR_ID`, `available=false`, повторная инициализация
