@@ -73,6 +73,30 @@
 | `ccs` / `ccs show` | состояние, адрес, статус, eCO2, TVOC |
 | `ccs help` | справка |
 
+## Проверено (2026-11-19, ESP32)
+
+- env `esp32-i2c-mapper`, прошивка `0.117.20261119_1754.2104`.
+- Датчик: адрес `0x5A`, `HW_ID 0x81`; после прогрева `400–420 ppm` eCO2,
+  `0–3 ppb` TVOC.
+- Компенсация t/RH подтверждена в логе:
+  `[M_CCS811] env compensation 29.4 C / 72.8 % -> ok`.
+- `/ccs811.html` — 200; `/ccs811/info|read|ver` — CVT; ресурсы есть в `/state/catalog`
+  и `/macros/resources.json`.
+- Терминал: `ccs`, `ccs show`, `ccs help`; обработка неизвестных подкоманд проверена.
+- Обнаружен и исправлен дефект: drive mode пишется как `0x10` (биты 6:4 `MEAS_MODE`),
+  а не `0x01`.
+
+## Пример макроса
+
+```lua
+every("*/30 * * * * *", function()
+    print("CCS811", ccs811.available, ccs811.eco2, ccs811.tvoc)
+end)
+```
+
+Готовые cron-примеры для всех датчиков: `module_macros/web/macros/sensors_15s.lua`,
+`sensors_30s.lua`, `sensors_1m.lua`, `sensors_5m.lua`.
+
 ## Слоистая структура
 
 ```
